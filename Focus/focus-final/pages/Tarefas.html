@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Focus - Minhas Tarefas</title>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/Tarefas.css">
+    <link rel="stylesheet" href="../assets/css/Dashboard.css">
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-logo">FOCUS</div>
+        <div class="header-centro">📚 Área do Estudante</div>
+        <div class="header-diretia">
+            <div class="header-usuario"> 👤 Olá, Usúario</div>
+            <button class="btn-sair" onclick="window.location.href='index.html'">SAIR</button>
+        </div>
+    </header>
+    
+    <!-- CONTEÚDO PRINCIPAL -->
+    <aside class="sidebar">
+        <div class="sidebar-titulo">Menu Principal</div>
+        <a href="Dashboard.html" class="nav-item">
+            <span class="icone">🏠</span> Dashboard
+        </a>
+        <a href="Tarefas.html" class="nav-item ativo">
+            <span class="icone">📝</span> Minhas Tarefas
+        </a>
+        <a href="index.html" class="nav-item vav-sair-item">
+            <span class="icone">🚪</span> Sair
+        </a>
+    </aside>
+
+    <!-- MAIN - TARAFAS + ETIQUETAS -->
+    <main class="main">
+        
+        <!-- TOPO : TITULO + BOTAO NOVA TAREFA -->
+        <div class="topo-main">
+            <div class="boas-vindas">
+                <h2>Minhas Tarefas</h2>
+                <p>Gerencie, organize e adicione etiquetas às suas tarefas</p>
+            </div>
+            <button class="btn-nova-tarefa">+ Nova Tarefa</button>
+        </div>
+
+        <!-- FORMULARIO: ADICIONAR NOVA TAREFA -->
+        <div class="bloco-form">
+            <div class="bloco-titulo">➕ Adicionar Nova Tarefa</div>
+
+            <form action="#" method="post" class="form-tarefa">
+
+                <div class="form-linha">
+                    <div class="campo-form">
+                        <label for="name-tarefa">Nome da tarefa</label>
+                        <input type="text" id="nome-tarefa" name="titulo"
+                        placeholder="Ex: Revisar matemática" required/>
+                    </div>
+
+                    <div class="campo-form campo-pequeno">
+                        <label for="prioridade">Prioridade</label>
+                        <select name="prioridade" id="prioridade">
+                            <option value="alta">Alta</option>
+                            <option value="intermediaria" selected>Intermediária</option>
+                            <option value="baixa">Baixa</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-linha">
+                    <div class="campo-fora">
+                        <label>Etiqueta</label>
+                        <div class="etiquetas-opcoes">
+                            <label class="etiq-check">
+                                <input type="checkbox" name="etiqueta" value="matematica"/>
+                                <span style="background:#EFF6FF; color:#1D4ED8">Matemática</span>
+                            </label>
+                            <label class="etiq-check">
+                                <input type="checkbox" name="etiqueta" value="portugues"/>
+                                <span style="background:#F0FDF4; color:#15803D">Português</span>
+                            </label>
+                            <label class="etiq-check">
+                                <input type="checkbox" name="etiqueta" value="fisica"/>
+                                <span style="background:#FEF3C7; color:#92400E">Física</span>
+                            </label>
+                            <label class="etiq-check">
+                                <input type="checkbox" name="etiqueta" value="webii"/>
+                                <span style="background:#FFF1F2; color:#BE123C">Web II</span> 
+                            </label>
+                            <label class="etiq-check">
+                                <input type="checkbox" name="etiqueta" value="ingles"/>
+                                <span style="background:#F5F3FF; color:#6D28D9">Inglês</span>
+                            </label>
+                            <label class="etiq-check">
+                                <input type="checkbox" name="etiqueta" value="geografia"/>
+                                <span style="background:#e7ff0e71; color:#45c909">Geografia</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-adicionar">Adicionar Tarefa</button>
+
+            </form>
+        </div>
+
+        <!-- FILTRO POR ETIQUETA -->
+        <div class="filtro-wrap">
+            <span class="filtro-label">Filtrar por etiqueta:</span>
+            <div class="filtro-etiqueta">
+                <a href="#" class="filtro-btn ativo">Todas</a>
+                <a href="#" class="filtro-btn" style="background:#EFF6FF; color:#1D4ED8; border-color:#BFDBFE">Matemática</a>
+                <a href="#" class="filtro-btn" style="background:#F0FDF4; color:#15803D; border-color:#86EFAC">Português</a>
+                <a href="#" class="filtro-btn" style="background:#FEF3C7; color:#92400E; border-color:#FDE68A">Física</a>
+                <a href="#" class="filtro-btn" style="background:#FFF1F2; color:#BE123C; border-color:#FECDD3">Web II</a>
+                <a href="#" class="filtro-btn" style="background:#F5F3FF; color:#6D28D9; border-color:#DDD6FE">Inglês</a>
+            </div>
+        </div>
+
+        <!-- LISTA DE TAREFAS -->
+        <div class="secao-titulo"> 📋 Lista de Tarefas</div>
+
+        <div class="tarefas-lista">
+
+            <!-- TAREFA 1 -->
+            <div class="tarefa-item">
+                <div class="tarefa-check">✓</div>
+                <div class="tarefa-corpo">
+                    <div class="tarefa-nome">Revisar matemática</div>
+                    <div class="tarefa-etiqueta">
+                        <span class="etiq-badge" style="background:#EFF6FF; color:#1D4ED8">Matemática</span>
+                    </div>
+                </div>
+                <span class="prioridade prio-alta">ALTA</span>
+                <div class="tarefa-acoes">
+                    <button class="btn-concluir">Concluir</button>
+                    <button class="btn-excluir-tarefa">🗑</button>
+                </div>
+            </div>
+
+            <!-- TAREFA 2 -->
+            <div class="tarefa-item">
+                <div class="tarefa-check">✓</div>
+                <div class="tarefa-corpo">
+                    <div class="tarefa-nome">Ler texto de história</div>
+                    <div class="tarefa-etiquetas">
+                        <span class="etiq-badge" style="background:#F0FDF4; color:#15803D">Português</span>
+                    </div>
+                </div>
+                <span class="prioridade prio-intermediaria">INTERMEDIÁRIA</span>
+                <div class="tarefa-acoes">
+                    <button class="btn-concluir">Concluir</button>
+                    <button class="btn-excluir-tarefa">🗑</button>
+                </div>
+            </div>
+
+            <!-- TAREFA 3 -->
+            <div class="tarefa-item">
+                <div class="tarefa-check">✓</div>
+                <div class="tarefa-corpo">
+                    <div class="tarefa-nome">Exercícios de física</div>
+                    <div class="tarefa-etiquetas">
+                        <span class="etiq-badge" style="background:#FEF3C7; color:#92400E">Física</span>
+                    </div>
+                </div>
+                <span class="prioridade prio-baixa">BAIXA</span>
+                <div class="tarefa-acoes">
+                    <button class="btn-concluir">Concluir</button>
+                    <button class="btn-excluir-tarefa">🗑</button>
+                </div>
+            </div>
+
+            <!-- TAREFA 4 -->
+            <div class="tarefa-item">
+                <div class="tarefa-check">✓</div>
+                <div class="tarefa-corpo">
+                    <div class="tarefa-nome">Projeto final de Web II</div>
+                    <div class="tarefa-etiquetas">
+                        <span class="etiq-badge" style="background:#FFF1F2; color:#BE123C">Web II</span>
+                        <span class="etiq-badge" style="background:#EFF6FF; color:#1D4ED8">Matemática</span>
+                    </div>
+                </div>
+                <span class="prioridade prio-alta">ALTA</span>
+                <div class="tarefa-acoes">
+                    <button class="btn-concluir">Concluir</button>
+                    <button class="btn-excluir-tarefa">🗑</button>
+                </div>
+            </div>
+
+            <!-- Tarefa 5 -->
+            <div class="tarefa-item">
+                <div class="tarefa-check">✓</div>
+                <div class="tarefa-corpo">
+                    <div class="tarefa-nome riscado">Estudar inglês — vocabulário técnico</div>
+                    <div class="tarefa-etiquetas">
+                        <span class="etiq-badge" style="background:#F5F3FF; color:#6D28D9">Inglês</span>
+                    </div>
+                </div>
+                <span class="prioridade prio-intermediaria">INTERMEDIÁRIA</span>
+                <div class="tarefa-acoes">
+                    <span class="tag-concluida">✅ Concluída</span>
+                    <button class="btn-excluir-tarefa">🗑</button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
