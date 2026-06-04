@@ -11,14 +11,14 @@
 // ============================================================
 
 // 1. Base: variáveis, mixins e reset
-@use 'base/variables' as *;
-@use 'base/mixins'    as *;
-@use 'base/reset';
+@import 'base/variables';
+@import 'base/mixins';
+@import 'base/reset';
 
 // 2. Layout: header, sidebar, main
-@use 'layout/layout';
+@import 'layout/layout';
 
 // 3. Páginas
-@use 'pages/index';
-@use 'pages/dashboard';
-@use 'pages/tarefas';
+@import 'pages/index';
+@import 'pages/dashboard';
+@import 'pages/tarefas';
