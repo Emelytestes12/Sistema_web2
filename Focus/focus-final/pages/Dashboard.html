@@ -11,6 +11,18 @@
 
     <!-- CSS compilado do SASS -->
     <link rel="stylesheet" href="../assets/css/main.css">
+
+    <style>
+        /* Ajuste para alinhar usuário e botão sair lado a lado */
+        .header-direita {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .header-usuario {
+            white-space: nowrap;
+        }
+    </style>
 </head>
 
 <body class="pagina-interna">
@@ -50,23 +62,22 @@
         </div>
 
         <!-- CIRCULOS DE PROGRESSO -->
-        <div class="progresso-grid">
-
+        <div class="progresso-grid" id="stats-resumo">
+            <!-- Os cards de progresso serão carregados aqui via JS -->
             <div class="prog-card verde">
-                <div class="num">12</div>
+                <div class="num" id="total-concluidas">0</div>
                 <div class="desc">Tarefas Concluidas esta semana</div>
             </div>
 
             <div class="prog-card laranja">
-                <div class="num">5</div>
+                <div class="num" id="tarefas-hoje">0</div>
                 <div class="desc">Tarefas para hoje</div>
             </div>
 
             <div class="prog-card vermelho">
-                <div class="num">3</div>
+                <div class="num" id="tarefas-atrasadas">0</div>
                 <div class="desc">Tarefas atrasadas</div>
             </div>
-
         </div>
 
         <!-- BARRA DE PROGRESSO GERAL -->
@@ -74,63 +85,19 @@
             <div class="bloco-titulo">📈 Progresso Geral da Semana</div>
             <div class="barra-lateral">
                 <span>Tarefas concluídas</span>
-                <span class="barra-pct">60%</span>
+                <span class="barra-pct" id="progresso-geral-pct">0%</span>
             </div>
             <div class="barra-bg">
-                <div class="barra-fill" style="width:60%;"></div>
+                <div class="barra-fill" id="progresso-geral-fill" style="width:0%;"></div>
             </div>
-            <div class="barra-legenda"> 12 de 20 tarefas concluídas </div>
+            <div class="barra-legenda" id="progresso-geral-legenda"> 0 de 0 tarefas concluídas </div>
         </div>
 
         <!-- RESUMO POR ETIQUETA -->
         <div class="bloco">
             <div class="bloco-titulo">🏷️ Progresso por Etiqueta</div>
-            <div class="categorias-lista">
-
-                <div class="categoria-item">
-                    <div class="cat-info">
-                        <span class="cat-etiqueta" style="background:#EFF6FF; color:#1D4ED8">Matemática</span>
-                        <span class="cat-desc">4 tarefas · 3 concluídas</span>
-                    </div>
-                    <div class="cat-barra-bg">
-                        <div class="cat-barra-fill" style="width:75%; background:#3B82F6"></div>
-                    </div>
-                    <span class="cat-pct">75%</span>
-                </div>
-
-                <div class="categoria-item">
-                    <div class="cat-info">
-                        <span class="cat-etiqueta" style="background:#F0FDF4; color:#15803D">Português</span>
-                        <span class="cat-desc">3 tarefas · 3 concluídas</span>
-                    </div>
-                    <div class="cat-barra-bg">
-                         <div class="cat-barra-fill" style="width:100%; background:#22C55E"></div>
-                    </div>
-                    <span class="cat-pct">100%</span>
-                </div>
-
-                <div class="categoria-item">
-                    <div class="cat-info">
-                        <span class="cat-etiqueta" style="background:#FEF3C7; color:#92400E">Física</span>
-                        <span class="cat-desc">5 tarefas · 2 concluída</span>
-                    </div>
-                    <div class="cat-barra-bg">
-                        <div class="cat-barra-fill" style="width:40%; background:#F59E0B"></div>
-                    </div>
-                    <span class="cat-pct">40%</span>
-                </div>
-
-                <div class="categoria-item">
-                    <div class="cat-info">
-                        <span class="cat-etiqueta" style="background:#FFF1F2; color:#BE123C">Web II</span>
-                        <span class="cat-desc">8 tarefas · 4 concluídas</span>
-                    </div>
-                    <div class="cat-barra-bg">
-                        <div class="cat-barra-fill" style="width:50%; background:#F43F5E"></div>
-                    </div>
-                    <span class="cat-pct">50%</span>
-                </div>
-
+            <div class="categorias-lista" id="categorias-container">
+                <!-- As categorias serão carregadas aqui via JS -->
             </div>
         </div>
 
@@ -143,5 +110,63 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => loadDashboardStats());
+
+        async function loadDashboardStats(){
+            try{
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+                
+                // Atualizar cards de resumo
+                document.getElementById('total-concluidas').innerText = data.resumo.totalConcluidasSemana;
+                document.getElementById('tarefas-hoje').innerText = data.resumo.tarefasParaHoje;
+                document.getElementById('tarefas-atrasadas').innerText = data.resumo.tarefasAtrasadas;
+
+                // Atualizar barra de progresso geral
+                const pctGeral = data.resumo.progressoGeral;
+                document.getElementById('progresso-geral-pct').innerText = `${pctGeral}%`;
+                document.getElementById('progresso-geral-fill').style.width = `${pctGeral}%`;
+                document.getElementById('progresso-geral-legenda').innerText = 
+                    `${data.resumo.totalConcluidasSemana} de ${data.resumo.totalTarefas} tarefas concluídas`;
+
+                // Atualizar categorias por etiqueta
+                const container = document.getElementById('categorias-container');
+                const labels = {
+                    'matematica': { name: 'Matemática', bg: '#EFF6FF', color: '#1D4ED8', fill: '#3B82F6' },
+                    'portugues': { name: 'Português', bg: '#F0FDF4', color: '#15803D', fill: '#22C55E' },
+                    'fisica': { name: 'Física', bg: '#FEF3C7', color: '#92400E', fill: '#F59E0B' },
+                    'webii': { name: 'Web II', bg: '#FFF1F2', color: '#BE123C', fill: '#F43F5E' },
+                    'ingles': { name: 'Inglês', bg: '#F5F3FF', color: '#6D28D9', fill: '#8B5CF6' },
+                    'geografia': { name: 'Geografia', bg: '#e7ff0e71', color: '#45c909', fill: '#22C55E' }
+                };
+
+                if (Object.keys(data.detalhePorEtiqueta).length === 0) {
+                    container.innerHTML = '<p class="text-muted">Nenhuma tarefa cadastrada ainda.</p>';
+                    return;
+                }
+
+                container.innerHTML = Object.entries(data.detalhePorEtiqueta).map(([tag, stats]) => {
+                    const style = labels[tag] || { name: tag, bg: '#eee', color: '#666', fill: '#999' };
+                    return `
+                        <div class="categoria-item">
+                            <div class="cat-info">
+                                <span class="cat-etiqueta" style="background:${style.bg}; color:${style.color}">${style.name}</span>
+                                <span class="cat-desc">${stats.total} tarefas · ${stats.concluidas} concluídas</span>
+                            </div>
+                            <div class="cat-barra-bg">
+                                <div class="cat-barra-fill" style="width:${stats.porcentagem}%; background:${style.fill}"></div>
+                            </div>
+                            <span class="cat-pct">${stats.porcentagem}%</span>
+                        </div>
+                    `;
+                }).join('');
+
+            } catch (err) {
+                console.error('Erro ao carregar estatísticas do dashboard:', err);
+            }
+        }
+    </script>
 </body>
 </html>
