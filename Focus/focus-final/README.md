@@ -4,6 +4,19 @@
 
 Equipe: Alessandra Silva · Emely Maria · José Rayff
 
+Acesse em: https://sistema-web2-1.onrender.com
+
+Para entrar como admin: 
+Senha do admin
+
+
+E-mail: admin@focus.com
+
+Senha:
+admin123
+
+Código:
+6666
 ---
 
 ## 🗂️ Estrutura de Pastas
